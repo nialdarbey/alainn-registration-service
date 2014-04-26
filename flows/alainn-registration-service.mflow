@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="alainn-registration-service">
+    <global-element name="HTTP\HTTPS" type="org.mule.tooling.ui.modules.core.global.httpsConnector" entity-id="HTTP-HTTPS#1">
+        <properties>
+            <property name="reuseAddress"/>
+            <property name="enableCookies"/>
+            <property name="serverSoTimeout" value="10000"/>
+            <property name="failOnUnresolvedHost"/>
+            <property name="socketSoLinger" value="0"/>
+            <property name="clientSoTimeout" value="10000"/>
+            <property name="socketMaxWait"/>
+            <property name="cookieSpec" value="netscape"/>
+            <property name="receiveBufferSize" value="0"/>
+            <property name="proxyHostname"/>
+            <property name="name" value="httpsConnector"/>
+            <property name="keepSendSocketOpen"/>
+            <property name="dynamicNotification"/>
+            <property name="sendBufferSize" value="0"/>
+            <property name="ENABLE_MODE_SWITCH"/>
+            <property name="auxiliary;index" value="1"/>
+            <property name="proxyPassword"/>
+            <property name="proxyUsername"/>
+            <property name="receiveBacklog" value="0"/>
+            <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/connector"/>
+            <property name="validateConnections" value="true"/>
+            <property name="label"/>
+            <property name="sendTcpNoDelay"/>
+            <property name="keepAlive"/>
+            <property name="proxyPort"/>
+            <property name="dispatcherPoolFactory-ref"/>
+            <property name="connectionTimeout"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/https/tls-key-store;0">
+                <property name="path" value="keystore.jks"/>
+                <property name="storePassword" value="changeit"/>
+                <property name="keyPassword" value="changeit"/>
+                <property name="auxiliary;index" value="3"/>
+                <property name="auxiliary;wrapIn" value="3"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="customerserviceFlow1" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="aa869fe7-f93b-412a-a530-02ef1c670bdb">
+        <properties>
+            <property name="initialState"/>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property name="auxiliary;index" value="4"/>
+        </properties>
+        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
+            <graphicalData x="0" y="0" width="0" height="0"/>
+            <endpoint direction="Inbound" name=":8081/customer-service" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="port" value="${https.port}"/>
+                    <property name="contentType"/>
+                    <property name="password"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="encoding"/>
+                    <property name="path" value="customer-service"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="auxiliary;index" value="5"/>
+                    <property name="connector-ref-outbound" value="httpsConnector"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="host" value="localhost"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
+                    <property name="keep-alive"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="ref"/>
+                    <property name="httpLabel"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property name="connector-ref" value="httpsConnector"/>
+                </properties>
+            </endpoint>
+            <pattern name="Proxy service" type="http://www.mulesoft.org/schema/mule/cxf/soapComponent" entity-id="CXF#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="port" value="CustomerPort"/>
+                    <property name="wsdlLocation" value="CustomerService.wsdl"/>
+                    <property name="serviceClass"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/cxf/proxy-service"/>
+                    <property name="payload" value="body"/>
+                    <property name="configuration-ref"/>
+                    <property name="namespace" value="http://www.alainn.com/SOA/service/Customer/1.0"/>
+                    <property name="validationEnabled"/>
+                    <property name="bindingId"/>
+                    <property name="onException"/>
+                    <property name="service" value="CustomerService"/>
+                    <property name="mtomEnabled"/>
+                    <property name="soapVersion"/>
+                    <property name="enableMuleSoapHeaders"/>
+                    <property name="auxiliary;index" value="6"/>
+                </properties>
+            </pattern>
+            <pattern name="opName" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="variableName" value="opName"/>
+                    <property name="value" value="#[xpath('fn:local-name(/*)')]"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
+                    <property name="auxiliary;index" value="7"/>
+                </properties>
+            </pattern>
+            <splitter index="8" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property-collection name="5bd9a769-0de2-4d9d-92b6-1b7233afacaa">
+                        <property name="choice.expression" value="#[opName == 'addMobileToken']"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[opName == 'addMobileToken']"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="b368d1f8-3621-4e08-aaf8-4df8c5f799ae">
+                        <property name="choice.expression" value="#[opName == 'addLoyaltyPoints']"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[opName == 'addLoyaltyPoints']"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="88480fd4-37c7-4f42-80f5-05a253b90f24">
+                        <property name="choice.expression" value="#[opName == 'getCustomer']"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[opName == 'getCustomer']"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="97ddde55-d1cf-425a-a47f-dd3a383390b9">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                </properties>
+                <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
+                <compartment entity-id="compartment#1">
+                    <lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="5bd9a769-0de2-4d9d-92b6-1b7233afacaa">
+                        <pattern name="getCustomerResponse.xml" type="http://www.mulesoft.org/schema/mule/core/parse-template" entity-id="Parse Template#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="location" value="template/getCustomerResponse.xml"/>
+<property name="auxiliary;index" value="10"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="b368d1f8-3621-4e08-aaf8-4df8c5f799ae">
+                        <pattern name="getCustomerResponse.xml" type="http://www.mulesoft.org/schema/mule/core/parse-template" entity-id="Parse Template#2">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="location" value="template/getCustomerResponse.xml"/>
+<property name="auxiliary;index" value="12"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="14" isChoiceOtherwiseLane="false" entity-id="88480fd4-37c7-4f42-80f5-05a253b90f24">
+                        <pattern name="getCustomerResponse.xml" type="http://www.mulesoft.org/schema/mule/core/parse-template" entity-id="Parse Template#3">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="location" value="template/getCustomerResponse.xml"/>
+<property name="auxiliary;index" value="14"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="97ddde55-d1cf-425a-a47f-dd3a383390b9">
+                        <pattern name="Exception" type="http://www.mulesoft.org/schema/mule/scripting/groovyComponent" entity-id="Groovy#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="script-ref"/>
+<property name="auxiliary;index" value="16"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/scripting/script-for-properties;0">
+    <property name="text" value="throw new RuntimeException(&quot;Unknown Operation: &quot; + flowVars.opName);"/>
+    <property name="engine" value="Groovy"/>
+    <property name="auxiliary;index" value="17"/>
+    <property name="auxiliary;wrapIn" value="17"/>
+</property-collection>
+<property-collection name="@http://www.mulesoft.org/schema/mule/scripting/script;0">
+    <property name="text" value="throw new RuntimeException(&quot;Unknown Operation: &quot; + flowVars.opName);"/>
+    <property name="engine" value="Groovy"/>
+    <property name="auxiliary;index" value="17"/>
+    <property name="auxiliary;wrapIn" value="17"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </splitter>
+        </lane>
+    </flow>
+</mule-configuration>
