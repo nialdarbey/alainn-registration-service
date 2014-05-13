@@ -1,33 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:https="http://www.mulesoft.org/schema/mule/https"
+<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+	xmlns:ldap="http://www.mulesoft.org/schema/mule/ldap" xmlns:https="http://www.mulesoft.org/schema/mule/https"
 	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.5.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
-http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/ldap http://www.mulesoft.org/schema/mule/ldap/current/mule-ldap.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd">
     <https:connector name="httpsConnector" cookieSpec="netscape" validateConnections="true" sendBufferSize="0" receiveBufferSize="0" receiveBacklog="0" clientSoTimeout="10000" serverSoTimeout="10000" socketSoLinger="0" doc:name="HTTP\HTTPS">
         <service-overrides messageFactory="org.mule.transport.http.HttpMultipartMuleMessageFactory" />
         <https:tls-key-store path="keystore.jks" keyPassword="changeit" storePassword="changeit" />
     </https:connector>
-    <flow name="customerserviceFlow1" doc:name="customerserviceFlow1">
-        <https:inbound-endpoint exchange-pattern="request-response" host="localhost" port="${https.port}" path="customer-service" doc:name=":8081/customer-service" connector-ref="httpsConnector"/>
-        <cxf:proxy-service doc:name="Proxy service" namespace="http://www.alainn.com/SOA/service/Customer/1.0" port="CustomerPort" service="CustomerService" wsdlLocation="CustomerService.wsdl" payload="body"/>
+    <ws:consumer-config name="CustomerServiceConsumer" wsdlLocation="service/CustomerService.wsdl" service="CustomerService" port="CustomerPort" serviceAddress="${url.customerService}" doc:name="Web Service Consumer" />
+    
+    <mulexml:namespace-manager includeConfigNamespaces="true">
+        <mulexml:namespace prefix="mes" uri="http://www.alainn.com/SOA/message/1.0" />
+        <mulexml:namespace prefix="mod" uri="http://www.alainn.com/SOA/model/1.0" />
+    </mulexml:namespace-manager>
+    <context:property-placeholder location="config.${env}.properties" />
+    <ldap:config name="LDAP" authDn="cn=Manager,dc=demos,dc=mulesoft,dc=com" authPassword="Mule1379" url="ldap://ec2-54-82-165-108.compute-1.amazonaws.com" doc:name="LDAP">
+        <ldap:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </ldap:config>
+    <data-mapper:config name="xml_to_map" transformationGraphPath="xml_to_map.grf" doc:name="xml_to_map"/>
+    <data-mapper:config name="xml_processregistration__to_xml_addmobiletoken_" transformationGraphPath="xml_processregistration__to_xml_addmobiletoken_.grf" doc:name="xml_processregistration__to_xml_addmobiletoken_"/>
+    <data-mapper:config name="XML_To_XML" transformationGraphPath="xml_to_xml.grf" doc:name="XML_To_XML"/>
+    <flow name="RegistrationserviceFlow1" doc:name="RegistrationserviceFlow1">
+        <https:inbound-endpoint exchange-pattern="request-response" host="localhost" port="${https.port}" path="registration-service" doc:name=":8081/registration-service" connector-ref="httpsConnector"/>
+        <cxf:proxy-service doc:name="Proxy service" namespace="http://www.alainn.com/SOA/service/Registration/1.0" port="RegistrationPort" service="RegistrationService" wsdlLocation="service/RegistrationService.wsdl" payload="body"/>
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
         <set-variable variableName="opName" value="#[xpath('fn:local-name(/*)')]" doc:name="opName"/>
         <choice doc:name="Choice">
-            <when expression="#[opName == 'addMobileToken']">
-                <parse-template location="template/getCustomerResponse.xml" doc:name="getCustomerResponse.xml"/>
+            <when expression="#[opName == 'checkRegistrationEmail']">
+                <ldap:search config-ref="LDAP" baseDn="ou=retail4connect,dc=demos,dc=mulesoft,dc=com" filter="(mail=#[xpath:/mes:checkRegistrationEmail/mod:Email])" scope="SUB_TREE" doc:name="Search" />
+                <parse-template location="checkRegistrationEmailResponse.xml" doc:name="checkRegistrationEmailResponse.xml"/>
             </when>
-            <when expression="#[opName == 'addLoyaltyPoints']">
-                <parse-template location="template/getCustomerResponse.xml" doc:name="getCustomerResponse.xml"/>
-            </when>
-            <when expression="#[opName == 'getCustomer']">
-                <parse-template location="template/getCustomerResponse.xml" doc:name="getCustomerResponse.xml"/>
+            <when expression="#[opName == 'processRegistration']">
+                <flow-ref name="register" doc:name="register"/>
+                <parse-template location="processRegistrationResponse.xml" doc:name="processRegistrationResponse.xml"/>
             </when>
             <otherwise>
                 <scripting:component doc:name="Exception">
@@ -36,4 +57,23 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
             </otherwise>
         </choice>
     </flow>
+    <sub-flow name="register" doc:name="register">
+        <enricher doc:name="Message Enricher" target="flowVars.searchResponse">
+            <ldap:search config-ref="LDAP" baseDn="ou=retail4connect,dc=demos,dc=mulesoft,dc=com" filter="(mail=#[xpath:/mes:processRegistrationEmail/mod:Customer/email])"  doc:name="Search for Email" />
+        </enricher>
+        <message-filter throwOnUnaccepted="true" doc:name="Email available ?">
+            <expression-filter expression="#[flowVars.searchResponse.isEmpty()]"/>
+        </message-filter>
+        <enricher source="#[xpath:/mes:saveCustomerResponse/mod:CustomerId]" target="flowVars.customerId" doc:name="Enrich with customerId">
+            <flow-ref name="save-customer" doc:name="save customer"/>
+        </enricher>
+        <data-mapper:transform config-ref="xml_to_map" doc:name="XML To Map"/>
+        <ldap:add-from-map config-ref="LDAP" dn="mail=#[payload.mail],ou=retail4connect,dc=demos,dc=mulesoft,dc=com" doc:name="Add from map">
+            <ldap:entry ref="#[payload]"/>
+        </ldap:add-from-map>
+    </sub-flow>
+    <sub-flow name="save-customer" doc:name="save-customer">
+        <data-mapper:transform doc:name="XML To XML" config-ref="XML_To_XML"/>
+        <ws:consumer config-ref="CustomerServiceConsumer" doc:name="save customer" operation="saveCustomer"/>
+    </sub-flow>
 </mule>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="nialdarbey" created="Sat May 03 21:52:04 ART 2014" description="XML To Map" guiVersion="3.4.3.P" id="1399168359018" licenseCode="Unlicensed" licenseType="Unknown" modified="Sat May 03 21:52:04 ART 2014" modifiedBy="nialdarbey" name="XML_To_Map" preview-file="${Project_Home}/src/test/resources/processRegistration.xml" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/map" _dataStructure="OBJECT" _id="__id" _type="Output" id="f786904e-345b-48b3-9dfe-343ac3678629">
+<Record fieldDelimiter="," name="map" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/map/cn" containerType="SINGLE" label="cn" name="cn" type="string"/>
+<Field __index="2" __sourcePath="{}/map/givenName" containerType="SINGLE" label="givenName" name="givenName" type="string"/>
+<Field __index="3" __sourcePath="{}/map/mail" containerType="SINGLE" label="mail" name="mail" type="string"/>
+<Field __index="1" __sourcePath="{}/map/sn" containerType="SINGLE" label="sn" name="sn" type="string"/>
+<Field __index="4" __sourcePath="{}/map/uid" containerType="SINGLE" label="uid" name="uid" type="string"/>
+<Field __index="5" __sourcePath="{}/map/userPassword" containerType="SINGLE" label="userPassword" name="userPassword" type="string"/>
+<Field __sourcePath="{}/map/objectClass" containerType="SINGLE" label="objectClass" name="objectClass" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration" _dataStructure="OBJECT" _id="__id" _type="Input" id="1edd8ee4-71b6-4652-8e23-58023171bf12">
+<Record fieldDelimiter="," name="processRegistration" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/id" containerType="SINGLE" label="id" name="id" type="string"/>
+<Field __index="1" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/firstName" containerType="SINGLE" label="firstName" name="firstName" type="string"/>
+<Field __index="2" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/lastName" containerType="SINGLE" label="lastName" name="lastName" type="string"/>
+<Field __index="3" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/email" containerType="SINGLE" label="email" name="email" type="string"/>
+<Field __index="4" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/password" containerType="SINGLE" label="password" name="password" type="string"/>
+<Field __index="5" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/mobilePhoneNumber" containerType="SINGLE" label="mobilePhoneNumber" name="mobilePhoneNumber" type="string"/>
+<Field __index="6" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/loyaltyPoints" containerType="SINGLE" label="loyaltyPoints" name="loyaltyPoints" type="integer"/>
+<Field __index="7" __schemaType="{http://www.alainn.com/SOA/model/1.0}mobileTokensType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/mobileTokens/token" containerType="list" label="token" name="token" type="string"/>
+<Field __index="8" __schemaType="{http://www.alainn.com/SOA/model/1.0}notificationPreferencesType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/notificationPreferences/preference" containerType="list" label="preference" name="preference" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'ns0:processRegistration' -&gt; 'map'" guiX="460" guiY="20" id="FOREACH_NS0_PROCESS_REGISTRATION_MAP" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.givenName = input.firstName;
+output.mail = input.email;
+output.sn = input.lastName;
+output.cn = input.firstName + ' ' + input.lastName;
+output.userPassword = input.id;
+output.objectClass = 'inetOrgPerson';;
+output.uid = input.email;]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <cn>$0.cn</cn>
+  <sn>$0.sn</sn>
+  <givenName>$0.givenName</givenName>
+  <mail>$0.mail</mail>
+  <uid>$0.uid</uid>
+  <userPassword>$0.userPassword</userPassword>
+  <objectClass>$0.objectClass</objectClass>
+</map>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="XML READER" guiX="20" guiY="20" id="XML_READER0" type="XML_READER">
+<attr name="xmlSchemaURL"><![CDATA[./src/main/resources/service/SOA-Message-1.0.xsd]]></attr>
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context namespacePaths="ns0=&quot;http://www.alainn.com/SOA/message/1.0&quot;" outPort="0" sequenceField="__id" xpath="/ns0:processRegistration">
+  <Mapping cloverField="id" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/id"/>
+  <Mapping cloverField="firstName" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/firstName"/>
+  <Mapping cloverField="lastName" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/lastName"/>
+  <Mapping cloverField="email" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/email"/>
+  <Mapping cloverField="password" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/password"/>
+  <Mapping cloverField="mobilePhoneNumber" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/mobilePhoneNumber"/>
+  <Mapping cloverField="loyaltyPoints" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/loyaltyPoints"/>
+  <Mapping cloverField="token" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/mobileTokens/token"/>
+  <Mapping cloverField="preference" namespacePaths="ns1=&quot;http://www.alainn.com/SOA/model/1.0&quot;" trim="true" xpath="ns1:Customer/notificationPreferences/preference"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[{http://www.alainn.com/SOA/message/1.0}processRegistration]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_NS0_PROCESS_REGISTRATION_MAP:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="f786904e-345b-48b3-9dfe-343ac3678629" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="XML_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="1edd8ee4-71b6-4652-8e23-58023171bf12" outPort="Port 0 (out)" toNode="FOREACH_NS0_PROCESS_REGISTRATION_MAP:0"/>
+</Phase>
+</Graph>

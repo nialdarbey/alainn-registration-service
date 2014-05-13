@@ -1,0 +1,16 @@
+<ns:processRegistration xmlns:ns="http://www.alainn.com/SOA/message/1.0" xmlns:ns1="http://www.alainn.com/SOA/model/1.0">
+         <ns1:Customer>
+            <id>hello123</id>
+            <firstName>Nial</firstName>
+            <lastName>Darbey</lastName>
+            <email>nial.darbey@mulesoft.com</email>
+            <mobileTokens>
+               <!--1 or more repetitions:-->
+               <token>?</token>
+            </mobileTokens>
+            <notificationPreferences>
+               <!--1 or more repetitions:-->
+               <preference>?</preference>
+            </notificationPreferences>
+         </ns1:Customer>
+      </ns:processRegistration>

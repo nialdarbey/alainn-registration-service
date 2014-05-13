@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="nialdarbey" created="Sat May 03 21:52:04 ART 2014" description="XML&lt;processRegistration&gt; To Xml&lt;addMobileToken&gt;" guiVersion="3.4.3.P" id="1399170790943" licenseCode="Unlicensed" licenseType="Unknown" modified="Sat May 03 21:52:04 ART 2014" modifiedBy="nialdarbey" name="XML_processRegistration__To_Xml_addMobileToken_" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __sourcePath="{http://www.alainn.com/SOA/message/1.0=ns0}/ns0:addMobileToken" _dataStructure="OBJECT" _id="__id" _type="Output" id="ae05550e-d7b2-4b75-b19f-57c166b4eca4">
+<Record fieldDelimiter="," name="addMobileToken" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:addMobileToken/ns1:CustomerId" containerType="SINGLE" label="CustomerId" name="CustomerId" type="string"/>
+<Field __index="1" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:addMobileToken/ns1:MobileToken" containerType="SINGLE" label="MobileToken" name="MobileToken" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="0" __sourcePath="{http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration" _dataStructure="OBJECT" _id="__id" _type="Input" id="14bc1a30-0765-4e80-925d-b5750157792b">
+<Record fieldDelimiter="," name="processRegistration" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/id" containerType="SINGLE" label="id" name="id" type="string"/>
+<Field __index="1" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/firstName" containerType="SINGLE" label="firstName" name="firstName" type="string"/>
+<Field __index="2" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/lastName" containerType="SINGLE" label="lastName" name="lastName" type="string"/>
+<Field __index="3" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/email" containerType="SINGLE" label="email" name="email" type="string"/>
+<Field __index="4" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/password" containerType="SINGLE" label="password" name="password" type="string"/>
+<Field __index="5" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/mobilePhoneNumber" containerType="SINGLE" label="mobilePhoneNumber" name="mobilePhoneNumber" type="string"/>
+<Field __index="6" __schemaType="{http://www.alainn.com/SOA/model/1.0}customerType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/loyaltyPoints" containerType="SINGLE" label="loyaltyPoints" name="loyaltyPoints" type="integer"/>
+<Field __index="7" __schemaType="{http://www.alainn.com/SOA/model/1.0}mobileTokensType" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/mobileTokens/token" containerType="list" label="token" name="token" type="string"/>
+<Field __index="8" __sourcePath="{http://www.alainn.com/SOA/model/1.0=ns1,http://www.alainn.com/SOA/message/1.0=ns0}/ns0:processRegistration/ns1:Customer/notificationPreferences/preference" containerType="list" label="preference" name="preference" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node cacheInMemory="true" charset="UTF-8" enabled="enabled" fileURL="dict:outputPayload" guiName="XML WRITER" guiX="900" guiY="20" id="EXT_XML_WRITER0" type="EXT_XML_WRITER" xmlSchemaURL="./src/main/resources/service/SOA-Message-1.0.xsd">
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[{http://www.alainn.com/SOA/message/1.0}addMobileToken]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'ns0:processRegistration' -&gt; 'ns0:addMobileToken'" guiX="460" guiY="20" id="FOREACH_NS0_PROCESS_REGISTRATION_NS0_ADD_MOBILE_TOKEN" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.CustomerId = input.email;
+output.MobileToken = input.token;]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="XML READER" guiX="20" guiY="20" id="XML_READER0" type="XML_READER">
+<attr name="xmlSchemaURL"><![CDATA[./src/main/resources/service/SOA-Message-1.0.xsd]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[{http://www.alainn.com/SOA/message/1.0}processRegistration]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_NS0_PROCESS_REGISTRATION_NS0_ADD_MOBILE_TOKEN:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="ae05550e-d7b2-4b75-b19f-57c166b4eca4" outPort="Port 0 (out)" toNode="EXT_XML_WRITER0:0"/>
+<Edge debugMode="true" fromNode="XML_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="14bc1a30-0765-4e80-925d-b5750157792b" outPort="Port 0 (out)" toNode="FOREACH_NS0_PROCESS_REGISTRATION_NS0_ADD_MOBILE_TOKEN:0"/>
+</Phase>
+</Graph>
