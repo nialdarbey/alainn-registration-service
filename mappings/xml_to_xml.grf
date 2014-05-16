@@ -59,7 +59,6 @@
 //START -> DO NOT REMOVE
 output.__id = input.__id;
 //END -> DO NOT REMOVE
-output.id = input.id;
 output.firstName = input.firstName;
 output.lastName = input.lastName;
 output.email = input.email;

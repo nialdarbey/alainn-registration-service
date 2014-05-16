@@ -41,9 +41,9 @@ output.givenName = input.firstName;
 output.mail = input.email;
 output.sn = input.lastName;
 output.cn = input.firstName + ' ' + input.lastName;
-output.userPassword = input.id;
 output.objectClass = 'inetOrgPerson';;
-output.uid = input.email;]]></attr>
+output.uid = input.email;
+output.userPassword = input.password;]]></attr>
 </Node>
 <Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
 <attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
