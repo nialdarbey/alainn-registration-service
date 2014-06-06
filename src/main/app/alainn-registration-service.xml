@@ -44,9 +44,9 @@ http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/cu
 		<mulexml:namespace prefix="mod"
 			uri="http://www.alainn.com/SOA/model/1.0" />
 	</mulexml:namespace-manager>
-	<context:property-placeholder location="config.${env}.properties" />
-	<ldap:config name="LDAP" authDn="cn=Manager,dc=demos,dc=mulesoft,dc=com"
-		authPassword="Mule1379" url="ldap://ec2-54-82-165-108.compute-1.amazonaws.com"
+    <secure-property-placeholder:config name="Secure_Property_Placeholder" key="${props.key}" location="config.${env}.properties" doc:name="Secure Property Placeholder"/>
+	<ldap:config name="LDAP" authDn="${ldap.auth.dn}"
+		authPassword="${ldap.auth.password}" url="${ldap.url}"
 		doc:name="LDAP">
 		<ldap:connection-pooling-profile
 			initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW" />

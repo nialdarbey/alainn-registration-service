@@ -56,31 +56,21 @@
 		&lt;mulexml:namespace prefix=&quot;mod&quot; uri=&quot;http://www.alainn.com/SOA/model/1.0&quot;/&gt;
 	&lt;/mulexml:namespace-manager&gt;</content>
     </global-unknown>
-    <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
-        <properties>
-            <property name="properties-ref"/>
-            <property name="order"/>
-            <property name="location" value="config.${env}.properties"/>
-            <property name="local-override"/>
-            <property name="system-properties-mode"/>
-            <property name="file-encoding"/>
-            <property name="auxiliary;index" value="8"/>
-            <property name="ignore-unresolvable"/>
-            <property name="ignore-resource-not-found"/>
-        </properties>
-    </global-element>
+    <global-unknown description="false" unknownName="Secure_Property_Placeholder" index="8" entity-id="global-unknown#2">
+        <content>&lt;secure-property-placeholder-config xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; name=&quot;Secure_Property_Placeholder&quot; key=&quot;${props.key}&quot; location=&quot;config.${env}.properties&quot; xmlns:doc=&quot;http://www.mulesoft.org/schema/mule/documentation&quot; doc:name=&quot;Secure Property Placeholder&quot;/&gt;</content>
+    </global-unknown>
     <global-element name="LDAP" type="http://www.mulesoft.org/schema/mule/ldap/config" entity-id="LDAP#1">
         <properties>
             <property name="maxPoolSize"/>
             <property name="authentication"/>
-            <property name="authPassword" value="Mule1379"/>
+            <property name="authPassword" value="${ldap.auth.password}"/>
             <property name="referral"/>
             <property name="name" value="LDAP"/>
             <property name="initialPoolSize"/>
             <property name="type"/>
-            <property name="authDn" value="cn=Manager,dc=demos,dc=mulesoft,dc=com"/>
+            <property name="authDn" value="${ldap.auth.dn}"/>
             <property name="auxiliary;index" value="9"/>
-            <property name="url" value="ldap://ec2-54-82-165-108.compute-1.amazonaws.com"/>
+            <property name="url" value="${ldap.url}"/>
             <property name="poolTimeout"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/ldap/connection-pooling-profile;0">
                 <property name="exhaustedAction" value="WHEN_EXHAUSTED_GROW"/>
@@ -111,7 +101,7 @@
             <property name="transformationGraphPath" value="xml_to_xml.grf"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="RegistrationserviceFlow1" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="b2a6c153-12c3-4fda-b5ab-fb5e1e3a8ad5">
+    <flow SubFlow="false" name="RegistrationserviceFlow1" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="e71e7dbd-00bd-48f3-9bbc-ab8ac1601f48">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>
@@ -195,26 +185,26 @@
             <splitter index="19" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="548c5f55-0143-4a23-98ca-1eaab6719368">
+                    <property-collection name="cec4beb8-5d44-4f24-b2cc-4a63b5d375c6">
                         <property name="choice.expression" value="#[opName == 'checkRegistrationEmail']"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[opName == 'checkRegistrationEmail']"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="5d6bb4fb-c50a-4a2d-b6c3-9a88774f712e">
+                    <property-collection name="3f44782a-0b5c-4de0-8382-97069a34efe1">
                         <property name="choice.expression" value="#[opName == 'processRegistration']"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[opName == 'processRegistration']"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="9b11bea0-bfbf-4c10-b9e7-9733f116702f">
+                    <property-collection name="c64f7fb1-0629-4c8e-a180-579d535c862d">
                         <property name="choice.otherwise" value="true"/>
                         <property-collection name="choice.attributes"/>
                     </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                 <compartment entity-id="compartment#1">
-                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="false" entity-id="548c5f55-0143-4a23-98ca-1eaab6719368">
+                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="false" entity-id="cec4beb8-5d44-4f24-b2cc-4a63b5d375c6">
                         <pattern name="Search" type="http://www.mulesoft.org/schema/mule/ldap/ldap-connector" entity-id="LDAP#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -242,7 +232,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="24" isChoiceOtherwiseLane="false" entity-id="5d6bb4fb-c50a-4a2d-b6c3-9a88774f712e">
+                    <lane hadOnlyOneElement="false" index="24" isChoiceOtherwiseLane="false" entity-id="3f44782a-0b5c-4de0-8382-97069a34efe1">
                         <pattern name="register" type="http://www.mulesoft.org/schema/mule/core/flow-ref" entity-id="Flow Reference#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -258,7 +248,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="27" isChoiceOtherwiseLane="true" entity-id="9b11bea0-bfbf-4c10-b9e7-9733f116702f">
+                    <lane hadOnlyOneElement="false" index="27" isChoiceOtherwiseLane="true" entity-id="c64f7fb1-0629-4c8e-a180-579d535c862d">
                         <pattern name="Exception" type="http://www.mulesoft.org/schema/mule/scripting/groovyComponent" entity-id="Groovy#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -298,7 +288,7 @@
             </scope>
         </lane>
     </flow>
-    <flow SubFlow="true" name="register" type="http://www.mulesoft.org/schema/mule/core/subflow" entity-id="444fad12-f67c-4223-9fe5-a58a7d9dc0b4">
+    <flow SubFlow="true" name="register" type="http://www.mulesoft.org/schema/mule/core/subflow" entity-id="b16d1b54-29af-40ea-b7d9-91445fa9e0d5">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>
@@ -343,20 +333,20 @@
             <splitter index="35" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="8e24bc36-bb3a-4171-b1c9-f43e830f3ba2">
+                    <property-collection name="8aaccde1-58c1-4041-9abd-dceb204abf80">
                         <property name="choice.expression" value="#[ flowVars.searchResponse.isEmpty()]"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[ flowVars.searchResponse.isEmpty()]"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="85f2dc89-de71-41d8-8d5c-440e6d8a03ed">
+                    <property-collection name="711f53d1-826b-4124-9fd1-ef97f4dcff76">
                         <property name="choice.otherwise" value="true"/>
                         <property-collection name="choice.attributes"/>
                     </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
                 <compartment entity-id="compartment#4">
-                    <lane hadOnlyOneElement="false" index="37" isChoiceOtherwiseLane="false" entity-id="8e24bc36-bb3a-4171-b1c9-f43e830f3ba2">
+                    <lane hadOnlyOneElement="false" index="37" isChoiceOtherwiseLane="false" entity-id="8aaccde1-58c1-4041-9abd-dceb204abf80">
                         <scope name="Enrich with customerId" type="org.mule.tooling.ui.modules.core.scope.enricher" entity-id="Message Enricher#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -408,7 +398,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="43" isChoiceOtherwiseLane="true" entity-id="85f2dc89-de71-41d8-8d5c-440e6d8a03ed">
+                    <lane hadOnlyOneElement="false" index="43" isChoiceOtherwiseLane="true" entity-id="711f53d1-826b-4124-9fd1-ef97f4dcff76">
                         <pattern name="Throw CustomerAlreadyRegisteredException" type="http://www.mulesoft.org/schema/mule/scripting/groovyComponent" entity-id="Groovy#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -433,7 +423,7 @@
             </splitter>
         </lane>
     </flow>
-    <flow SubFlow="true" name="save-customer" type="http://www.mulesoft.org/schema/mule/core/subflow" entity-id="7d92ae53-f158-4ee8-a891-c32be546b1d7">
+    <flow SubFlow="true" name="save-customer" type="http://www.mulesoft.org/schema/mule/core/subflow" entity-id="fbda6024-bc71-46dc-857f-1d61262955f3">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>

@@ -4,13 +4,10 @@
             <firstName>Nial</firstName>
             <lastName>Darbey</lastName>
             <email>nial.darbey@mulesoft.com</email>
-            <mobileTokens>
-               <!--1 or more repetitions:-->
-               <token>?</token>
-            </mobileTokens>
             <notificationPreferences>
                <!--1 or more repetitions:-->
-               <preference>?</preference>
+               <preference>Sms</preference>
+               <preference>apple-push</preference>
             </notificationPreferences>
          </ns1:Customer>
       </ns:processRegistration>
